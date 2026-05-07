@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login / Register</title>
+
+    <style>
+        body {
+            text-align: center;
+            margin-top: 80px;
+            font-family: Arial;
+
+            /* ⭐ BACKGROUND IMAGE */
+            background-image: url("LoginButton.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            height: 100vh;
+        }
+
+        /* ⭐ DARK OVERLAY */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: -1;
+        }
+
+        h2 {
+            color: white;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        input, select {
+            width: 250px;
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 8px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background: #28a745;
+            color: white;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        #msg {
+            margin-top: 10px;
+            font-weight: bold;
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2 id="title">Login</h2>
+
+<!-- LOGIN FORM -->
+<div id="loginForm">
+    <input id="email" placeholder="Email"><br>
+    <input id="password" type="password" placeholder="Password"><br>
+</div>
+
+<!-- REGISTER FORM -->
+<div id="registerForm" style="display:none;">
+    <input id="name" placeholder="Name"><br>
+    <input id="emailReg" placeholder="Email"><br>
+    <input id="passwordReg" type="password" placeholder="Password"><br>
+
+    <select id="role">
+        <option value="ngo">NGO</option>
+        <option value="restaurant">Restaurant</option>
+    </select><br>
+</div>
+
+<button onclick="submitForm()" id="btn">Login</button>
+
+<p id="msg"></p>
+
+<p style="color:white;">
+    New user? <a href="#" onclick="toggle()" class="register-link">Register</a>
+</p>
+
+<script>
+let isRegister = false;
+
+// 🔁 Toggle Login/Register
+function toggle() {
+    isRegister = !isRegister;
+
+    document.getElementById("title").innerText = isRegister ? "Register" : "Login";
+    document.getElementById("btn").innerText = isRegister ? "Register" : "Login";
+
+    document.getElementById("loginForm").style.display = isRegister ? "none" : "block";
+    document.getElementById("registerForm").style.display = isRegister ? "block" : "none";
+
+    document.getElementById("msg").innerText = "";
+}
+
+// 🚀 Submit Form
+function submitForm() {
+
+    let nameVal = document.getElementById("name").value.trim();
+
+    let emailVal = isRegister
+        ? document.getElementById("emailReg").value.trim()
+        : document.getElementById("email").value.trim();
+
+    let passwordVal = isRegister
+        ? document.getElementById("passwordReg").value.trim()
+        : document.getElementById("password").value.trim();
+
+    let roleVal = document.getElementById("role").value;
+
+    if (!emailVal || !passwordVal) {
+        document.getElementById("msg").innerText = "Fill Email & Password";
+        return;
+    }
+
+    // REGISTER
+    if (isRegister) {
+
+        if (!nameVal) {
+            document.getElementById("msg").innerText = "Enter Name";
+            return;
+        }
+
+        fetch("http://127.0.0.1:5000/register", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                name: nameVal,
+                email: emailVal,
+                password: passwordVal,
+                role: roleVal
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("msg").innerText = data.message;
+            setTimeout(() => toggle(), 1000);
+        });
+
+    }
+
+    // LOGIN
+    else {
+
+        fetch("http://127.0.0.1:5000/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                email: emailVal,
+                password: passwordVal
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            document.getElementById("msg").innerText = data.message;
+
+            if (data.message === "Login Success") {
+                localStorage.setItem("role", data.role);
+                localStorage.setItem("email", emailVal);
+                localStorage.setItem("loggedIn", "true");
+
+                window.location.href = "index.html";
+            }
+        });
+    }
+}
+</script>
+
+</body>
+</html>

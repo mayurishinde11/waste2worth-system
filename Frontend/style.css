@@ -1,0 +1,191 @@
+/* Reset */
+
+:root {
+    --primary: #2b7a78;
+    --secondary: #17252a;
+    --accent: #3aafa9;
+    --light: #def2f1;
+    --white: #ffffff;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Body */
+body {
+    text-align: center;
+    margin-top: 80px;
+    font-family: Arial;
+
+    /* ⭐ Background Image */
+    background-image: url("C:\Users\ASUS\Waste2Worth\Frontend\LoginButton.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    
+    background: var(--light);
+    font-family: 'Segoe UI', sans-serif;
+
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Headings */
+h2, h3 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Buttons */
+button {
+    background: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+button {
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Table */
+table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+thead {
+    background: #3498db;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+tbody tr {
+    background: #f9f9f9;
+    transition: 0.2s;
+}
+
+tbody tr:hover {
+    background: #ecf0f1;
+}
+
+/* Chatbot */
+#chatInput {
+    width: 70%;
+}
+
+#chatOutput {
+    margin-top: 10px;
+    padding: 10px;
+    background: #ecf0f1;
+    border-radius: 8px;
+}
+
+/* Cards (optional sections) */
+.card {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: none;
+
+}
+
+/* Status colors */
+.status-available {
+    color: green;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: blue;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        font-size: 12px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+.btn-primary {
+    background: var(--primary);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--secondary);
+}
+
+button {
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+#chatContainer {
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}

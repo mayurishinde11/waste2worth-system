@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <title>Available Food</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        async function loadFood() {
+            const res = await fetch("http://127.0.0.1:5000/get_food");
+            const data = await res.json();
+
+            let table = "";
+
+            data.forEach(food => {
+                table += `
+                <tr>
+                    <td>${food.name}</td>
+                    <td>${food.quantity}</td>
+                    <td>${food.location}</td>
+                    <td>${food.expiry}</td>
+                    <td>
+                        <button onclick="deliverFood(${food.id})" class="btn btn-success btn-sm">
+                            Delivered
+                        </button>
+                    </td>
+                </tr>`;
+            });
+
+            document.getElementById("foodTable").innerHTML = table;
+        }
+
+        async function deliverFood(id) {
+            if (!confirm("Mark this food as delivered?")) return;
+            await fetch(`http://127.0.0.1:5000/delete_food/${id}`, {
+                method: "DELETE"
+            });
+
+            alert("Food Delivered ✅");
+            loadFood();
+        }
+
+        window.onload = loadFood;
+    </script>
+</head>
+
+<body class="container mt-5">
+
+    <h2 class="mb-4">🍱 Available Food</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Location</th>
+                <th>Expiry</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="foodTable"></tbody>
+    </table>
+
+</body>
+
+<div class="container mt-3">
+    <a href="index.html" class="btn btn-secondary">
+        ⬅ Back to Home
+    </a>
+</div>
+</html>
